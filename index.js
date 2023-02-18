@@ -7,26 +7,14 @@ const bodyParser = require("body-parser");
 require("./src/authentication/local.strategy");
 require("./src/authentication/jwt.strategy");
 const passport = require("passport");
-const corsAnywhere = require('cors-anywhere');
+const cors = require("cors");
 
 
 const app = express();
 const port = 3000;
 
-
-
-const corsProxy = corsAnywhere.createServer({
-  originWhitelist: [], // Permettre toutes les origines
-  requireHeader: ['origin', 'x-requested-with'] // Exiger les en-têtes origin et x-requested-with
-});
-
-app.use('/', corsProxy);
-
-// Définir vos routes ici
-
-app.listen(3000, () => {
-  console.log('Le serveur est en cours d\'exécution sur le port 3000');
-});
+app.use(bodyParser.json());
+app.use(cors());
 
 // Protect all /locations route with JWT Authentication
 app.use(
