@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 require("./src/authentication/local.strategy");
 require("./src/authentication/jwt.strategy");
 const passport = require("passport");
-const cors = require("cors");
+const corsAnywhere = require('cors-anywhere');
 
 
 const app = express();
@@ -15,12 +15,12 @@ const port = 3000;
 
 
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
+const corsProxy = corsAnywhere.createServer({
+  originWhitelist: [], // Permettre toutes les origines
+  requireHeader: ['origin', 'x-requested-with'] // Exiger les en-têtes origin et x-requested-with
 });
+
+app.use('/', corsProxy);
 
 // Définir vos routes ici
 
