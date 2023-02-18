@@ -1,6 +1,7 @@
 const canAccess =
   (allowedRoles = []) =>
   (req, res, next) => {
+    console.log("req :",req.user);
     if (!allowedRoles || allowedRoles.length === 0) {
       return next();
     }

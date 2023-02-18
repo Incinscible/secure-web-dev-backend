@@ -6,7 +6,7 @@ const { DuplicateError } = require("../custom-errors/duplicate.error");
 async function createOne(userData) {
   try {
     // Override/force `role` property
-    const saneData = { ...userData, role: "user" };
+    const saneData = { ...userData, role: userData.role };
     const user = new User(saneData);
     await user.save();
     // Return standardized user format given by findOne function

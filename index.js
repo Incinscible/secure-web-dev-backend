@@ -7,11 +7,26 @@ const bodyParser = require("body-parser");
 require("./src/authentication/local.strategy");
 require("./src/authentication/jwt.strategy");
 const passport = require("passport");
+const cors = require("cors");
+
 
 const app = express();
 const port = 3000;
 
-app.use(bodyParser.json());
+
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
+// Définir vos routes ici
+
+app.listen(3000, () => {
+  console.log('Le serveur est en cours d\'exécution sur le port 3000');
+});
 
 // Protect all /locations route with JWT Authentication
 app.use(
